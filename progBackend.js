@@ -8,7 +8,7 @@ class ProductManager {
     }
 
     getNextId = () => {
-        const count = this.products.lenght
+        const count = this.products.length
 
         if (count > 0) {
             const lastProduct = this.products[count - 1]
@@ -21,7 +21,7 @@ class ProductManager {
 
 
     getNextCode = () => {
-        const count = this.products.lenght
+        const count = this.products.length
 
         if (count > 0) {
             const lastProduct = this.products[count - 1]
@@ -46,25 +46,45 @@ class ProductManager {
             stock
         }
 
+        if(title === undefined){
+            return console.log('Todos los campos son obligarios, por favor llenarlos todos');
+         }else if (description === undefined) {
+             return console.log('Todos los campos son obligarios, por favor llenarlos todos');
+         }else if (price === undefined) {
+             return console.log('Todos los campos son obligarios, por favor llenarlos todos');
+         }else if (thumbnail === undefined) {
+             return console.log('Todos los campos son obligarios, por favor llenarlos todos');
+         }else if (stock === undefined) {
+             return console.log('Todos los campos son obligarios, por favor llenarlos todos');
+         }else {
+            return this.products.push(product)
+         }
+        
+        
+
         /* if (Object.values(product.title) === '') {
             console.log('Todos los campos son obligarios, por favor llenarlos todos')
         }else this.products.push(product) */
         
-        if(title === '')console.log('Todos los campos son obligarios, por favor llenarlos todos');
-        else if (description === '') console.log('Todos los campos son obligarios, por favor llenarlos todos');
-        else if (price === 0) console.log('Todos los campos son obligarios, por favor llenarlos todos');
-        else if (thumbnail === '') console.log('Todos los campos son obligarios, por favor llenarlos todos');
-        else if (description === '') console.log('Todos los campos son obligarios, por favor llenarlos todos');
-        else if (stock === 0) console.log('Todos los campos son obligarios, por favor llenarlos todos');
-        else this.products.push(product)
+        
+
+        /* if (!title && !description && !price && !thumbnail && !stock ){
+            return console.log('Todos los campos son obligarios, por favor llenarlos todos');
+        } else {
+           return this.products.push(product)
+        } */
 
         
     }
     
 
     getProductById = (id) =>{
-      this.products.find(prod => prod.id === id) 
-      if (prod.id != id) console.log('Not found');
+      let prodVerification = this.products.find(prod => prod.id === id) 
+      if (prodVerification === undefined) {
+      return console.log('Not found');
+    }else {
+        return prodVerification
+    }
     };
     
     
@@ -73,11 +93,16 @@ class ProductManager {
 }
 
 const productManager = new ProductManager()
-productManager.addProduct("mouse", "raton paranoico", 1200, scr = 'slsll', 22, 2)
+productManager.addProduct("raton paranoico", 1200, scr = 'slsll', 22)
 
-productManager.addProduct("teclado","las teclitas", 3000, src = 'lasteclitasdelabuelo', 33, 3)
+productManager.addProduct("teclado","las teclitas", 3000, src = 'lasteclitasdelabuelo', 3)
 
 productManager.addProduct("monitor","el moni moni", 4300, src = 'elmonidelabuelo', 3)
 
-console.log(productManager);
 
+console.log(productManager);
+console.log('============================================');
+console.log(productManager.getProductById(2)); 
+console.log('============================================');
+console.log(productManager.getProducts());
+console.log('============================================');
