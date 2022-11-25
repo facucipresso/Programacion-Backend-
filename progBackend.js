@@ -100,7 +100,6 @@ productManager.addProduct("teclado","las teclitas", 3000, src = 'lasteclitasdela
 productManager.addProduct("monitor","el moni moni", 4300, src = 'elmonidelabuelo', 3)
 
 
-console.log(productManager);
 console.log('============================================');
 console.log(productManager.getProductById(2)); 
 console.log('============================================');
