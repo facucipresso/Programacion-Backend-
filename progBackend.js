@@ -1,17 +1,23 @@
+const fs = require('fs')
+
+
 class ProductManager {
     constructor() {
-        this.products = []
+        this.path = './productManager.json'
     }
 
     getProducts = () => {
-        return this.products
+        let mostrarProductos = JSON.parse (fs.readFileSync('this.path', 'utf-8'))
+        console.log(mostrarProductos);
+
     }
 
     getNextId = () => {
-        const count = this.products.length
+        const count = JSON.parse(this.path.length)
+        const countP = JSON.parse(this.path)
 
         if (count > 0) {
-            const lastProduct = this.products[count - 1]
+            const lastProduct = countP[count - 1]
             const id = lastProduct.id + 1
             return id
         } else {
@@ -21,10 +27,11 @@ class ProductManager {
 
 
     getNextCode = () => {
-        const count = this.products.length
+        const count = JSON.parse(this.path.length)
+        const countParse = JSON.parse(this.path)
 
         if (count > 0) {
-            const lastProduct = this.products[count - 1]
+            const lastProduct = countParse[count - 1]
             const code = lastProduct.code + 1
             return code
         } else {
@@ -57,7 +64,8 @@ class ProductManager {
          }else if (stock === undefined) {
              return console.log('Todos los campos son obligarios, por favor llenarlos todos');
          }else {
-            return this.products.push(product)
+            return JSON.stringify (fs.writeFileSync('this.path',product))
+            
          }
         
         
@@ -79,7 +87,7 @@ class ProductManager {
     
 
     getProductById = (id) =>{
-      let prodVerification = this.products.find(prod => prod.id === id) 
+      let prodVerification = JSON.parse (this.paht.find(prod => prod.id === id)) 
       if (prodVerification === undefined) {
       return console.log('Not found');
     }else {
@@ -93,15 +101,15 @@ class ProductManager {
 }
 
 const productManager = new ProductManager()
-productManager.addProduct("raton paranoico", 1200, scr = 'slsll', 22)
+productManager.addProduct("mouse", "raton paranoico", 1200, scr = 'slsll', 22)
 
-productManager.addProduct("teclado","las teclitas", 3000, src = 'lasteclitasdelabuelo', 3)
+/* productManager.addProduct("teclado","las teclitas", 3000, src = 'lasteclitasdelabuelo', 3)
 
-productManager.addProduct("monitor","el moni moni", 4300, src = 'elmonidelabuelo', 3)
+productManager.addProduct("monitor","el moni moni", 4300, src = 'elmonidelabuelo', 3) */
 
 
-console.log('============================================');
+/* console.log('============================================');
 console.log(productManager.getProductById(2)); 
-console.log('============================================');
+console.log('============================================'); */
 console.log(productManager.getProducts());
-console.log('============================================');
+//console.log('============================================');
