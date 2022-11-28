@@ -8,7 +8,7 @@ class ProductManager {
 
     getProducts = () => {
         let mostrarProductos = JSON.parse (fs.readFileSync('this.path', 'utf-8'))
-        console.log(mostrarProductos);
+        console.log( fs.readFileSync(mostrarProductos));
 
     }
 
@@ -91,7 +91,7 @@ class ProductManager {
       if (prodVerification === undefined) {
       return console.log('Not found');
     }else {
-        return prodVerification
+        return fs.readFileSync(prodVerification, 'utf-8') 
     }
     };
     
