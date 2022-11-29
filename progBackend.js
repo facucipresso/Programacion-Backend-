@@ -3,7 +3,7 @@ const fs = require('fs')
 
 class ProductManager {
     constructor() {
-        this.path = './productManager.json'
+        this.path = fs.writeFileSync('./productManager.json', '[]')
     }
 
     getProducts = () => {
@@ -84,6 +84,26 @@ class ProductManager {
 
         
     }
+
+    upDateProduct = (id, productActualise)=>{
+        let prodVerification = JSON.parse (this.paht.find(prod => prod.id === id))
+        
+        if (prodVerification === undefined){
+            return console.log('Product not found');
+        }else {
+            return fs.writeFileSync(this.path, productActualise )
+        }
+    }
+
+
+    deleteProduct = (id) => {
+        let prodVerification = JSON.parse (this.paht.find(prod => prod.id === id))
+        if ( prodVerification===undefined){
+            return console.log('Can not delete');
+        }else {
+            return fs.unlinkSync(prodVerification)
+        }
+    }
     
 
     getProductById = (id) =>{
@@ -113,3 +133,4 @@ console.log(productManager.getProductById(2));
 console.log('============================================'); */
 console.log(productManager.getProducts());
 //console.log('============================================');
+console.log(productManager.upDateProduct(1, addProduct("mouse", "ratones paranoico", 1200, scr = 'slsll', 22)));
