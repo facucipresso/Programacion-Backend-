@@ -2,17 +2,34 @@ const fs = require('fs')
 
 
 class ProductManager {
-    constructor() {
-        this.path = fs.writeFileSync('./productManager.json', '[]')
+    constructor(path) {
+        this.path = path 
+    }
+
+    read = ()=>{
+        if(fs.existsSync(this.path)){
+          return fs.promises.readFile(this.path, 'utf-8') 
+          .then (r=>JSON.parse(r)) 
+        } 
+        return []
+    }
+
+    write = list=>{
+        return  fs.promises.writeFile(this.path,JSON.stringify(list))
     }
 
     getProducts = () => {
-        let mostrarProductos = JSON.parse (fs.readFileSync('this.path', 'utf-8'))
-        console.log( fs.readFileSync(mostrarProductos));
+        let mostrarProductos = this.read()
+        return mostrarProductos
+    }
+
+    getNextID = list =>{
+        const count = list.length 
+        return (count > 0 ) ? list[count-1].id + 1 : 1
 
     }
 
-    getNextId = () => {
+    /* getNextId = () => {
         const count = JSON.parse(this.path.length)
         const countP = JSON.parse(this.path)
 
@@ -23,7 +40,7 @@ class ProductManager {
         } else {
             return 1
         }
-    }
+    } */
 
 
     getNextCode = () => {
@@ -39,14 +56,24 @@ class ProductManager {
         }
     }
 
+    addProduct = async (obj) => {
+        const list = await this.read()
+        const nextID = this.nextID(list)
+        obj.id = nextID 
 
-    addProduct = (title, description, price, thumbnail, stock) => {
+        list.push(obj)
+        await this.write(list)
+    }
+
+
+    /* addProduct = async(title, description, price, thumbnail, stock) => {
+        const list = await this.read()
         const id = this.getNextId()
         const code = this.getNextCode()
         const product = {
             id,
             title,
-            description,
+            description, 
             price,
             thumbnail,
             code,
@@ -64,11 +91,12 @@ class ProductManager {
          }else if (stock === undefined) {
              return console.log('Todos los campos son obligarios, por favor llenarlos todos');
          }else {
-            return JSON.stringify (fs.writeFileSync('this.path',product))
+            list.push(title, description, price, thumbnail, stock)
+            await this.write(list)
             
          }
         
-        
+    } */    
 
         /* if (Object.values(product.title) === '') {
             console.log('Todos los campos son obligarios, por favor llenarlos todos')
@@ -83,16 +111,19 @@ class ProductManager {
         } */
 
         
-    }
+    
 
-    upDateProduct = (id, productActualise)=>{
-        let prodVerification = JSON.parse (this.paht.find(prod => prod.id === id))
-        
-        if (prodVerification === undefined){
-            return console.log('Product not found');
-        }else {
-            return fs.writeFileSync(this.path, productActualise )
+    upDateProduct = async (id, obj)=>{
+        obj.id = id 
+        const list = await this.read()
+
+        for (let i = 0; i < array.length; i++) {
+            if (list[i].id = id){
+                list[i] = obj
+                break 
+            }
         }
+        await this.write(list)
     }
 
 
@@ -120,8 +151,8 @@ class ProductManager {
 
 }
 
-const productManager = new ProductManager()
-productManager.addProduct("mouse", "raton paranoico", 1200, scr = 'slsll', 22)
+/* const productManager = new ProductManager()
+productManager.addProduct("mouse", "raton paranoico", 1200, scr = 'slsll', 22) */
 
 /* productManager.addProduct("teclado","las teclitas", 3000, src = 'lasteclitasdelabuelo', 3)
 
@@ -131,6 +162,8 @@ productManager.addProduct("monitor","el moni moni", 4300, src = 'elmonidelabuelo
 /* console.log('============================================');
 console.log(productManager.getProductById(2)); 
 console.log('============================================'); */
-console.log(productManager.getProducts());
+//console.log(productManager.getProducts());
 //console.log('============================================');
-console.log(productManager.upDateProduct(1, addProduct("mouse", "ratones paranoico", 1200, scr = 'slsll', 22)));
+//console.log(productManager.upDateProduct(1, addProduct("mouse", "ratones paranoico", 1200, scr = 'slsll', 22)));
+
+module.exports = ProductManager
